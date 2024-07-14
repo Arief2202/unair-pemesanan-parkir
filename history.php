@@ -16,6 +16,11 @@
         echo "<script>alert('Login Failed, please relogin!'); window.location.href = \"/login.php\";</script>";
         die;
     }
+    if(isset($_POST['cancel'])){
+        $sql = "UPDATE `pemesanan` SET `status` = '4' WHERE `pemesanan`.`id` = ".$_POST['cancel'].";";
+        $query = mysqli_query($conn, $sql);
+        if($query) echo "<script>alert('Pesanan berhasil dibatalkan!'); window.location.href = \"/history.php\";</script>";
+    }
 ?>
 <!doctype html>
 <html lang="en" data-bs-theme="dark">
@@ -77,7 +82,7 @@
                         <td><?=$data->timestamp?></td>
                         
                         <?php
-                            if($data->status == 1) echo "<td><div class='btn btn-danger'>Batalkan Pesanan</div></td>";
+                            if($data->status == 1) echo "<td><form method='post' action=''><button type='submit' name='cancel' value='$data->id' class='btn btn-danger'>Batalkan Pesanan</button></td></form>";
                             else if($data->status == 2) echo "<td> </td>";
                             else if($data->status == 3) echo "<td> </td>";
                             else if($data->status == 4) echo "<td> </td>";
