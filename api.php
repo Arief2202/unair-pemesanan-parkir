@@ -38,12 +38,8 @@
                 $result = mysqli_query($conn, "UPDATE `pemesanan` SET `status` = '2' WHERE `pemesanan`.`id` = ".$pemesanan->id.";");
                 if($result){
                     http_response_code(200);
-                    echo json_encode([
-                        "status" => "success",
-                        "pesan" => "Checkin berhasil",
-                        "user" => $user,
-                        "pemesanan" => $pemesanan,
-                    ]);
+                    header("Content-Type: text/plain");
+                    echo $pemesanan->slot;
                 }
                 else{
                     echo json_encode([
