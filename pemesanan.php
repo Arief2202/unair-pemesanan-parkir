@@ -66,7 +66,10 @@
     ?>
 
     <div class="container mt-5">
-        <div class="card p-5">         
+        <div class="card p-5">     
+            <div class="d-flex justify-content-center mb-4">
+                <h1>Gerbang Keluar</h1>
+            </div>    
             <form method="POST" action="">
                 
             <div class="d-md-block d-none">
@@ -147,6 +150,9 @@
                     </div>
             </div>
             </form>
+            <div class="d-flex justify-content-center mt-3">
+                <h1>Gerbang Masuk</h1>
+            </div>    
         </div>
     </div>
      
