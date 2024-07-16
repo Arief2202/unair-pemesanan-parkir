@@ -37,9 +37,12 @@
             if($pemesanan){
                 $result = mysqli_query($conn, "UPDATE `pemesanan` SET `status` = '2' WHERE `pemesanan`.`id` = ".$pemesanan->id.";");
                 if($result){
+                    $slots = ["r3", "r2", "r1", "l1", "l2", "l3"];
                     http_response_code(200);
                     header("Content-Type: text/plain");
-                    echo $pemesanan->slot;
+                    for($a=0; $a<6; $a++){
+                        if($pemesanan->slot == $slots[$a]) echo $a+1, die;
+                    }
                 }
                 else{
                     echo json_encode([
@@ -110,6 +113,16 @@
                 "pesan" => "change status failed, incorrect slot",
             ]);die;
         }
+        $pemesanan = mysqli_fetch_object(mysqli_query($conn, "SELECT * FROM pemesanan WHERE slot = '".$_GET['slot']."' AND status = 1"));
+        if($pemesanan){
+            http_response_code(403);
+            echo json_encode([
+                "status" => "failed",
+                "pesan" => "pemesan tempat ini belum melakukan checkin!",
+                "alarm" => 1
+            ]);
+            die;
+        }
         $pemesanan = mysqli_fetch_object(mysqli_query($conn, "SELECT * FROM pemesanan WHERE user_id = '0' AND slot = '".$_GET['slot']."'"));
         $result = null;
         if(!$pemesanan){
@@ -127,12 +140,14 @@
                 "status" => "success",
                 "pesan" => "change status berhasil",
                 "pemesanan" => $result,
+                "alarm" => 0
             ]);
         }
         else{
             echo json_encode([
                 "status" => "failed",
                 "pesan" => "change status failed, database error",
+                "alarm" => 0
             ]);
         }
     }
