@@ -36,7 +36,7 @@ if (isset($_GET['checkin']) && isset($_GET['id_card'])) {
     if ($user) {
         if ($pemesanan) {
             http_response_code(401);
-            $slots = [["r3", 201], ["r3", 202], ["r3", 203], ["r3", 204], ["r3", 205], ["r3", 206]];
+            $slots = [["r3", 201], ["r2", 202], ["r1", 203], ["l1", 204], ["l2", 205], ["l3", 206]];
             for ($a = 0; $a < 6; $a++) {
                 if ($pemesanan->slot == $slots[$a][0]) {
                     http_response_code(402);
