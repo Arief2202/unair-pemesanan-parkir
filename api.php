@@ -43,25 +43,31 @@ if (isset($_GET['checkin']) && isset($_GET['id_card'])) {
                     
                     $result = mysqli_query($conn, "UPDATE `pemesanan` SET `status` = '2' WHERE `pemesanan`.`id` = " . $pemesanan->id . ";");
                     if ($result) {
-                            http_response_code($slots[$a][1]);
-                            echo json_encode([
-                                "status" => "Success",
-                                "pesan" => "Checkin Success",
-                                "status" => $slots[$a][1],
-                                "user" => $user,
-                                "pemesanan" => $pemesanan,
-                        ]);
-                        die;
+                        http_response_code($slots[$a][1]);
+                        echo json_encode([
+                            "status" => "Success",
+                            "pesan" => "Checkin Success",
+                            "status" => $slots[$a][1],
+                            "user" => $user,
+                            "pemesanan" => $pemesanan,
+                        ]);die;
                     }
                     else {
                         echo json_encode([
                             "status" => "failed",
                             "pesan" => "Checkin failed, database error!",
                             "user" => $user,
-                        ]);
+                        ]);die;
                     }
                 }
             }
+            echo json_encode([
+                "status" => "Failed",
+                "pesan" => "Checkin Failed",
+                "status" => 401,
+                "user" => $user,
+                "pemesanan" => $pemesanan,
+            ]);die;
         } 
         else {
             echo json_encode([
