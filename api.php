@@ -45,12 +45,10 @@
                             echo json_encode([
                                 "status" => "Success",
                                 "pesan" => "Checkin Success",
+                                "status" => $slots[$a][1],
                                 "pemesanan" => $pemesanan,
                             ]);
                             die;
-                        }
-                        else{
-                            http_response_code(403);
                         }
                     }
                 }
