@@ -37,11 +37,21 @@
             if($pemesanan){
                 $result = mysqli_query($conn, "UPDATE `pemesanan` SET `status` = '2' WHERE `pemesanan`.`id` = ".$pemesanan->id.";");
                 if($result){
-                    $slots = ["r3", "r2", "r1", "l1", "l2", "l3"];
-                    http_response_code(200);
+                    $slots = [["r3", 201], ["r3", 202], ["r3", 203], ["r3", 204], ["r3", 205], ["r3", 206]];
                     header("Content-Type: text/plain");
                     for($a=0; $a<6; $a++){
-                        if($pemesanan->slot == $slots[$a]) echo $a+1, die;
+                        if($pemesanan->slot == $slots[$a][0]){
+                            http_response_code($slots[$a][1]);
+                            echo json_encode([
+                                "status" => "Success",
+                                "pesan" => "Checkin Success",
+                                "pemesanan" => $pemesanan,
+                            ]);
+                            die;
+                        }
+                        else{
+                            http_response_code(403);
+                        }
                     }
                 }
                 else{
