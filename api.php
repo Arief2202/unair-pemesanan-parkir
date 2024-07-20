@@ -37,7 +37,13 @@ if (isset($_GET['checkin']) && isset($_GET['id_card'])) {
         if ($pemesanan) {
             http_response_code(401);
             $slots = [["r3", 201], ["r2", 202], ["r1", 203], ["l1", 204], ["l2", 205], ["l3", 206]];
+            $stt = array();
             for ($a = 0; $a < 6; $a++) {
+                $stt[$a]['slot'] = $pemesanan->slot;
+                $stt[$a]['check'] = $slots[$a][0];
+                $stt[$a]['result'] = ($pemesanan->slot == $slots[$a][0]);
+                $stt[$a]['result'] = ($slots[$a][0]);
+
                 if ($pemesanan->slot == $slots[$a][0]) {
                     http_response_code(402);
                     
@@ -65,6 +71,7 @@ if (isset($_GET['checkin']) && isset($_GET['id_card'])) {
                 "status" => "Failed",
                 "pesan" => "Checkin Failed",
                 "status" => 401,
+                "status2" => $stt,
                 "user" => $user,
                 "pemesanan" => $pemesanan,
             ]);die;
